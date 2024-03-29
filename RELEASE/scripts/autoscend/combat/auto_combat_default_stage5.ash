@@ -3,6 +3,12 @@ string auto_combatDefaultStage5(int round, monster enemy, string text)
 	// stage 5 = kill
 	string retval;
 
+	//throw a dart if available
+	if(canUse($skill[Darts: Attack %Part 1]))
+	{
+		return useSkill($skill[Darts: Attack %Part 1]]);
+	}
+
 	//Unskip stage 4
 	if(get_property("auto_skipStage4").to_boolean()) set_property("auto_skipStage4", false);
 	
