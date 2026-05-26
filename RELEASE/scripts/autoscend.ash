@@ -164,15 +164,6 @@ void initializeSettings() {
 
 	icehouseUserErrorProtection();
 
-	string pool = visit_url("questlog.php?which=3");
-	matcher my_pool = create_matcher("a skill level of (\\d+) at shooting pool", pool);
-	if(my_pool.find() && (my_turncount() == 0))
-	{
-		int curSkill = to_int(my_pool.group(1));
-		int sharkCountMin = ceil((curSkill * curSkill) / 4);
-		int sharkCountMax = ceil((curSkill + 1) * (curSkill + 1) / 4);
-	}
-
 	set_property("auto_abooclover", true);
 	set_property("auto_aboopending", 0);
 	set_property("auto_avalancheDeployed", false);
