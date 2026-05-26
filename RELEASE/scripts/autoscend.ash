@@ -160,8 +160,10 @@ void initializeSettings() {
 		}
 	}
 
+	// We ask the user to confirm automatic switching of moonsigns, if they have spoon and opted-in
 	auto_spoonTuneConfirm();
 
+	// We make sure that important monsters aren't banished
 	icehouseUserErrorProtection();
 
 	string pool = visit_url("questlog.php?which=3");

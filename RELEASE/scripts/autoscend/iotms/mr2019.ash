@@ -490,6 +490,8 @@ skill auto_spoonCombatSkill()
 	}
 }
 
+// Users must specify a sign to switch to for autoscend to switch signs
+// This function fetches and parses that setting
 string auto_spoonGetDesiredSign()
 {
 	string spoonsign = get_property("auto_spoonsign").to_lower_case();
