@@ -573,6 +573,11 @@ string defaultMaximizeStatement()
 	{
 		res += ",water,hot res";
 	}
+	// need more meat than usual for skills + level in meatpath
+	// as of 2026-03-30 this values meat drop double item drop in the default maximizer statement
+	if (in_amw() && my_level()<13) {
+		res += ",10meat";
+	}
 	
 	stat primeStat = my_primestat();
 	if(in_plumber())
