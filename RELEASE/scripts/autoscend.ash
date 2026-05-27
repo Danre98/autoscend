@@ -967,6 +967,7 @@ void initializeDay(int day)
 				}
 			}
 
+			// 2013 IOTM
 			makeStartingSmiths();
 
 			equipBaseline();
