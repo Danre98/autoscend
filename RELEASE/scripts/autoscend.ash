@@ -175,6 +175,7 @@ void initializeSettings() {
 		int sharkCountMax = ceil((curSkill + 1) * (curSkill + 1) / 4);
 	}
 
+	// resetting autoscend properties
 	set_property("auto_abooclover", true);
 	set_property("auto_aboopending", 0);
 	set_property("auto_avalancheDeployed", false);
@@ -278,6 +279,7 @@ void initializeSettings() {
 	set_property("_auto_candyMapCompleted", false);
 	beehiveConsider(false);
 
+	// all initialization functs besides eudora are for paths
 	eudora_initializeSettings();
 	heavyrains_initializeSettings();
 	awol_initializeSettings();
