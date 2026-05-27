@@ -1774,6 +1774,8 @@ void resetState() {
 
 	resetMaximize();
 
+	// Below code should be removed? according to the same linked post, fixed in r20376-8. Your truly doesn't have lefty, so 
+	// they cannot test it themselves.
 	if (canChangeToFamiliar($familiar[Left-Hand Man]) && familiar_equipped_equipment($familiar[Left-Hand Man]) != $item[none])
 	{
 		// Leaving something equipped on the Left-Hand man like the Latte is currently bugged in mafia
