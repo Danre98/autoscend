@@ -5916,7 +5916,7 @@ boolean auto_ignoreExperience()
 boolean auto_needAccordion()
 {
 	if (is_boris() || is_jarlsberg() || is_pete() || isActuallyEd() ||
-	    in_darkGyffte() || in_plumber() || in_wereprof() || in_zootomist())
+	    in_darkGyffte() || in_plumber() || in_wereprof() || in_zootomist() || in_amw())
 	{
 		return false;
 	}
