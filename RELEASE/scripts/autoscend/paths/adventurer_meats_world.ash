@@ -292,7 +292,7 @@ amw_statAmount amw_nextLevelSubstats() {
 	// which stat is our mainstat should be mostly consistent with the priority of amw_nextSkillSubstats()
 	// the difference between that function and this one is that this focuses on leveling priority if we have to meatlevel,
 	// while the other one focuses on acquiring skills
-	if (next_level == 12 || next_level == 13){
+	if (next_level > 11){
 		mainstat = $stat[submoxie];
 	}
 	goal.st = mainstat;
