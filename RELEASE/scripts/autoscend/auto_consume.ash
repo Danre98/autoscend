@@ -1056,7 +1056,7 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 	}
 	if(internalQuestStatus("questL08Trapper") < 3 && auto_havePastaWand()) { 
 		// consider blacklisting legendary noodles so we have some available for combat forcing if we still need to climb slope and have the wand
-		if (numPreparedLegendaryNoodleDishes() < 2) {
+		if (numPreparedLegendaryNoodleDishes() == 1) {
 			leg_nood_dishes = legendaryNoodleDishes();
 			auto_log_debug(leg_nood_dishes);
 			foreach dish in leg_nood_dishes {
@@ -1064,7 +1064,7 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 				auto_log_debug("LegNoodsCheck: blacklisted" + leg_nood_dishes);
 			}
 		}
-		else if (numPreparedLegendaryNoodleDishes() < 0 && min(numBaseLegendaryNoodleDishes(), item_amount($item[legendary noodles])) < 2) {
+		else if (numPreparedLegendaryNoodleDishes() < 1 && min(numBaseLegendaryNoodleDishes(), item_amount($item[legendary noodles])) < 2) {
 			foreach dish in leg_nood_dishes {
 				blacklist[leg_nood_dishes[dish]] = true;
 				auto_log_debug("LegNoodsCheck: blacklisted base dishes " + leg_nood_dishes[dish]);
