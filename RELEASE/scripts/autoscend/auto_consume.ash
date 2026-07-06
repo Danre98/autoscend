@@ -1068,7 +1068,7 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 			foreach dish in leg_nood_dishes {
 				blacklist[leg_nood_dishes[dish]] = true;
 				auto_log_debug("LegNoodsCheck: blacklisted base dishes " + leg_nood_dishes[dish]);
-				auto_log_debug("Prepped dish is: ")
+				auto_log_debug("Prepped dish is: " + dish);
 			}
 		}
 	}
