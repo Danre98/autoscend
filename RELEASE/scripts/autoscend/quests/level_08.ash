@@ -649,7 +649,7 @@ boolean L8_trapperNinjaLair()
 	{
 		return false;
 	}
-	if(L8_trapperPeak()) // try to unlock peak
+	if(L8_trapperPeak() || L8_trapperTalk()) // try to unlock peak, or lair (sometimes necessary if called from L11 Shen)
 	{
 		return true; // successfully finished this part of the quest
 	}
