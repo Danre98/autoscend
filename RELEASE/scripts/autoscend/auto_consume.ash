@@ -1434,7 +1434,16 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 					auto_log_debug("LegNoodsCheck: actions has desirability now");
 					to_pretty_string(actions[n]);
 				}
+				if (legendaryNoodleDishes() contains it) {auto_log_debug("LegNoodsCheck: leg noods detected precraft")};
 			}
+			if ( (i == 0) &&
+				(legendaryNoodleDishes() contains it) && potentialTurnGain[it] > 0)
+				{
+					actions[n].desirability += potentialTurnGain[it];
+					auto_log_debug("LegNoodsCheck: actions has desirability now");
+					to_pretty_string(actions[n]);
+				}
+			if (legendaryNoodleDishes() contains it) {auto_log_debug("LegNoodsCheck: leg noods detected craft bypass")};
 			actions[n].howToGet = obtain_mode;
 		}
 	}
