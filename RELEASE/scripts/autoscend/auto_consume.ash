@@ -416,6 +416,10 @@ boolean autoEat(int howMany, item toEat, boolean silent)
 		&& (get_property("_legendaryNoodlesSpleen").to_boolean() || spleen_left() < 1) // check that we aren't gonna take the spleen option
 		) {
 		switchToFamXP(350); // we're getting famxp by process of elimination; trying to switch to a fam we want famxp on
+		auto_log_debug("LegNoodsCheck: famxp switching");
+	}
+	if (legendaryNoodleDishes() contains toEat) {
+		auto_log_debug("LegNoodsCheck: eating noods!!!");
 	}
 	if(item_amount(toEat) < howMany)
 	{
@@ -1055,11 +1059,13 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 		if (numPreparedLegendaryNoodleDishes() < 2) {
 			foreach dish in legendaryNoodleDishes() {
 				blacklist[dish] = true;
+				auto_log_debug("LegNoodsCheck: blacklisted" + dish);
 			}
 		}
 		else if (numPreparedLegendaryNoodleDishes() < 0 && min(numBaseLegendaryNoodleDishes(), item_amount($item[legendary noodles])) < 2) {
 			foreach dish in legendaryNoodleDishes() {
 				blacklist[legendaryNoodleDishes()[dish]] = true;
+				auto_log_debug("LegNoodsCheck: blacklisted" + legendaryNoodleDishes()dish);
 			}
 		}
 	}
@@ -1178,9 +1184,11 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 				if (!get_property("_legendaryNoodlesSpleen").to_boolean() && spleen_left() > 0 && auto_willEatLegendaryNoodles()) {
 					potentialTurnGain[it] = 20.0;// not actually 20, but we almost certainly want to consume it
 					// doing the auto_willEatLegendaryNoodles() to exclude paths that might be too weird to assume this
+					auto_log_debug("LegNoodsCheck: Ascribing 20 turngain to " + it);
 				} 
 				else if (auto_wantFamXP(350)){
 					potentialTurnGain[it] = 0.75; // arbitrary, but probably good enough
+					auto_log_debug("LegNoodsCheck: Ascribing 0.75 turngain to " + it);
 				}
 			}
 			// speakeasy drinks are not available as items and will cause a crash here if not excluded.
@@ -1419,6 +1427,8 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 				(it == $item[pheromone cocktail] || legendaryNoodleDishes() contains it) && potentialTurnGain[it] > 0)
 				{
 					actions[n].desirability += potentialTurnGain[it];
+					auto_log_debug("LegNoodsCheck: actions has desirability now");
+					to_pretty_string(actions[n]);
 				}
 			}
 			actions[n].howToGet = obtain_mode;
