@@ -1061,7 +1061,7 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 			auto_log_debug(leg_nood_dishes);
 			foreach dish in leg_nood_dishes {
 				blacklist[dish] = true;
-				auto_log_debug("LegNoodsCheck: blacklisted" + leg_nood_dishes);
+				auto_log_debug("LegNoodsCheck: blacklisted " + leg_nood_dishes);
 			}
 		}
 		else if (numPreparedLegendaryNoodleDishes() < 1 && min(numBaseLegendaryNoodleDishes(), item_amount($item[legendary noodles])) < 2 && numBaseLegendaryNoodleDishes() > 0) {
