@@ -1055,7 +1055,7 @@ boolean loadConsumables(string _type, ConsumeAction[int] actions)
 		}
 	}
 	if(internalQuestStatus("questL08Trapper") < 3 && auto_havePastaWand()) { 
-		leg_nood_dishes = legendaryNoodleDishes();
+		item[item] leg_nood_dishes = legendaryNoodleDishes();
 		auto_log_debug(leg_nood_dishes);
 		// consider blacklisting legendary noodles so we have some available for combat forcing if we still need to climb slope and have the wand
 		if (numPreparedLegendaryNoodleDishes() == 1) {
