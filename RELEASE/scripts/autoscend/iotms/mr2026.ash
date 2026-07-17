@@ -343,7 +343,7 @@ boolean auto_willEatLegendaryNoodles() {
 	// Min adv per full filter is set to four because we don't differentiate between the quality of the noodles when we force-eat them, and the "worst" ones average 4 per full (others are 5)
 	auto_log_info(canEatSomeLegNoods() + " is Caneat boolean");
 	auto_log_info((!get_property("auto_limitConsume").to_boolean()) + " is limit boolean");
-	auto_log_info((get_property("auto_consumeMinAdvPerFill").to_int() <= 4) + " is min adv full boolean");
+	auto_log_info((get_property("auto_consumeMinAdvPerFill").to_float() <= 4) + " is min adv full boolean");
 	auto_log_info(get_property("auto_consumeMinAdvPerFill").to_int() + "is min adv full");
 	auto_log_info((!in_small() && !in_plumber()) + " is path boolean");
 	boolean retval = canEatSomeLegNoods() && !get_property("auto_limitConsume").to_boolean() && get_property("auto_consumeMinAdvPerFill").to_int() <= 4 && !in_small() && !in_plumber();
