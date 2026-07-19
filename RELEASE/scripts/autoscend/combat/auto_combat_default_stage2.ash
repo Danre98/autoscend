@@ -114,7 +114,6 @@ string auto_combatDefaultStage2(int round, monster enemy, string text)
 			auto_log_debug("five");
 			// should stop killing monsters with sword if we don't want the current sword monster or the current enemy
 			if (canUse(stop_kill_guys) && !haveUsed(kill_guys)) {
-				abort("PANIC MODE");
 				return useSkill(stop_kill_guys);
 			}
 		}
