@@ -107,9 +107,8 @@ string auto_combatDefaultStage2(int round, monster enemy, string text)
 		skill stop_kill_guys = $skill[%fn\, stop killing those guys];
 		// if the pref is false, we must have this fam equipped because we're looking into swording a different monster
 		if (!get_property("auto_preferSwordFam").to_boolean()) {
-			auto_log_debug("four");
-			if (auto_wantToSword(enemy) && canUse(kill_guys)) {
-				auto_log_debug("three");
+			if (auto_wantToSword(enemy, true) && canUse(kill_guys)) {
+				auto_log_debug("four");
 				return useSkill(kill_guys);
 			}
 			auto_log_debug("five");
