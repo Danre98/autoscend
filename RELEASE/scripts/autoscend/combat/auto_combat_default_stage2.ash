@@ -108,7 +108,7 @@ string auto_combatDefaultStage2(int round, monster enemy, string text)
 		// if the pref is false, we must have this fam equipped because we're looking into swording a different monster
 		if (!get_property("auto_preferSwordFam").to_boolean()) {
 			auto_log_debug("four");
-			if (auto_wantToSword(enemy) && canUse(kill_guys)) {
+			if (auto_wantToSword(enemy)) {
 				auto_log_debug("three");
 				return useSkill(kill_guys);
 			}
