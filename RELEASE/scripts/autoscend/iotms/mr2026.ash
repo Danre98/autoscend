@@ -611,7 +611,6 @@ boolean auto_prepSwordOfSWords() {
 		set_property("auto_preferSwordFam", false);
 	}
 
-	// auto_log_debug("no drop fam " + lookupFamiliarDatafile("drop"));
 	// ========= Decide whether it makes sense to prep the Sword ==========
 	// skip if we're out of Sword targets
 	if (get_property("_swordOfSWordsMonsterChanged").to_int() > 2) {auto_log_debug("no sword targets"); return false;}
@@ -619,6 +618,7 @@ boolean auto_prepSwordOfSWords() {
 	// But temporarily set the pref to true first!
 	set_property("auto_preferSwordFam", true);
 	if (lookupFamiliarDatafile("drop") != sword) {
+		auto_log_debug("no drop fam " + lookupFamiliarDatafile("drop"));
 		set_property("auto_preferSwordFam", false);
 		return false;
 	}
