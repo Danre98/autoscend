@@ -647,6 +647,22 @@ boolean auto_prepSwordOfSWords() {
 		target_location = $location[The Defiled Nook];
 		auto_log_debug("nook OK");
 	}
+	
+	// hidden bowling alley-specific bowl of scorpions stuff
+	if (target_location == $location[The Hidden Bowling Alley]) {
+		L11_hiddenTavernUnlock(true);
+		if(my_ascensions() == get_property("hiddenTavernUnlock").to_int())
+		{
+			if(item_amount($item[Bowl Of Scorpions]) == 0 && !is_werewolf()) //can't access shops as werewolf
+			{
+				auto_buyUpTo(1, $item[Bowl Of Scorpions]);
+				if(in_ocrs())
+				{
+					auto_buyUpTo(3, $item[Bowl Of Scorpions]);
+				}
+			}
+		}
+	}
 
 	if (target_location != $location[none]){
 		handleFamiliar($familiar[Sword of S Words]);
