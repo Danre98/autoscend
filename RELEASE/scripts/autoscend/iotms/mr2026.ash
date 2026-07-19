@@ -640,7 +640,7 @@ boolean auto_prepSwordOfSWords() {
 		auto_log_debug("slabs OK");
 	}
 	if (get_property("hiddenBowlingAlleyProgress").to_int() - 1 + item_amount($item[Bowling Ball]) < 2 && zone_isAvailable($location[The Hidden Bowling Alley])) {
-		target_location = $location[The Hidden Bowling Alley];
+		// target_location = $location[The Hidden Bowling Alley];
 		auto_log_debug("hidden bowling alley OK");
 	}
 	if (get_property("cyrptNookEvilness").to_int() > 13 && zone_isAvailable($location[The Defiled Nook])) {
