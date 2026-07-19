@@ -582,6 +582,7 @@ boolean auto_prepSwordOfSWords() {
 	familiar sword = $familiar[Sword of S Words];
 	// check that using Sword is allowed
 	if(!auto_haveSwordFam() || !canChangeToFamiliar(sword)) {
+		auto_log_debug("no sword fam");
 		return false;
 	}
 
@@ -591,6 +592,7 @@ boolean auto_prepSwordOfSWords() {
 		if (get_property("auto_preferSwordFam").to_boolean()){
 			set_property("auto_preferSwordFam", false);
 		}
+		auto_log_debug("no sword kills");
 		return false;
 	}
 	// if we aren't done with the current target, enable sword
@@ -599,6 +601,7 @@ boolean auto_prepSwordOfSWords() {
 		if (!get_property("auto_preferSwordFam").to_boolean()){
 			set_property("auto_preferSwordFam", true);
 		}
+		auto_log_debug("like current mon");
 		if (!auto_wantToSwitchSwordToDifferentSmutOrc()) {
 			return false;
 		}
@@ -610,9 +613,9 @@ boolean auto_prepSwordOfSWords() {
 
 	// ========= Decide whether it makes sense to prep the Sword ==========
 	// skip if we're out of Sword targets
-	if (get_property("_swordOfSWordsMonsterChanged").to_int() > 2) {return false;}
+	if (get_property("_swordOfSWordsMonsterChanged").to_int() > 2) {auto_log_debug("no sword targets"); return false;}
 	// check that Sword will be selected from the drop familiars; no point in setting it if it won't be used
-	if (lookupFamiliarDatafile("drop") != sword) {return false;}
+	if (lookupFamiliarDatafile("drop") != sword) {auto_log_debug("no drop fam");return false;}
 
 	// ========= Pick a location to prep the Sword in, and adventure there ==========
 	location target_location = $location[none];
