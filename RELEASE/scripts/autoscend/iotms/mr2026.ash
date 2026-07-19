@@ -413,8 +413,7 @@ void legendaryNoodlesChoiceHandler() {
 
 boolean auto_haveSwordFam()
 {
-	if(auto_have_familiar($familiar[Sword of S Words]))
-	{
+	if(auto_have_familiar($familiar[Sword of S Words])) {
 		return true;
 	}
 	return false;
@@ -660,4 +659,123 @@ void auto_disableSwordOfSWords(location loc) {
 	if (loc == $location[Sonofa Beach]) {
 		set_property("auto_preferSwordFam", false);
 	}
+}
+
+boolean auto_haveCupOf13s() {
+	if(auto_is_valid($item[Cup of 13s]) && available_amount($item[Cup of 13s]) > 0 ) {
+		return true;
+	}
+	return false;
+}
+
+item[int] auto_pickCupOf13sIngredients() {
+	item spoon = $item[spoon];
+	item spoon_alt;
+	// deciding on which other item we want if spoon isn't available
+	// these items partially come from the meatsmith, but that follows armory and leggery restrictions
+	if (knoll_available() && isHermitAvailable() && isArmoryAndLeggeryStoreAvailable() && my_meat() > 7200) {
+		spoon_alt = $item[dripping meat staff];
+	}
+	else if (my_meat() > 12200 && have_skill($skill[Armorcraftiness]) && isArmoryAndLeggeryStoreAvailable()) {
+		spoon_alt = $item[meat shield];
+	}
+	else {spoon_alt = $item[none];}
+
+	// summon spoons if possible
+	while (item_amount($item[spoon]) < 3 && canUse($skill[Generate Irony]) && my_mp() > 30) {
+		useSkill($skill[Generate Irony]);
+	}
+
+	item[int] cup_ingredients;
+	for x from 1 to 3 {
+		if (item_amount(spoon) >= x) {
+			cup_ingredients[x] = spoon;
+		}
+		else {
+			cup_ingredients[x] = spoon_alt;
+		}
+	}
+	return cup_ingredients;
+}
+
+// answers the question of "are supported ingredients available"
+boolean auto_canMakeCupOf13sDrink() {
+	if (!auto_haveCupOf13s() || in_small()) {return false;} // taken from irrat's fork, using just in case we don't get 10x adv in small
+	item[int] tentative_ingredients = auto_pickCupOf13sIngredients();
+	if (tentative_ingredients[3] == $item[none]) {
+		return false;
+	}
+	return true;
+}
+
+float auto_CupOf13sDesirability() {
+	item[int] tentative_ingredients = auto_pickCupOf13sIngredients();
+	float net_adv_gain = 12.0;
+	for x from 1 to 3 {
+		if (tentative_ingredients[x] == $item[meat shield] && (free_crafts() - x < 1)) {
+			net_adv_gain -= 1;
+		}
+		else if (tentative_ingredients[x] == $item[meat shield]) {
+			// valuing free crafts at 0.5 adv
+			net_adv_gain -= 0.5;
+		}
+	}
+	return net_adv_gain;
+}
+
+boolean auto_acquireCupOf13sIngredients(item[int] ingredients) {
+	// get spoon count
+	int spoon_count = 0;
+	for x from 1 to 3 {
+		if (ingredients[x] == $item[spoon]) {
+			spoon_count += 1;
+		}
+	}
+	// make sure we have enough. Spoons are gotten elsewhere.
+	if (item_amount($item[spoon]) < spoon_count) {
+		return false;
+	}
+	// if we're only using spoons for our drink, we don't need to get any other ingredients
+	if (spoon_count > 2) {
+		return true;
+	}
+
+	// alt as in alternative to spoon (not that we expect spoon-having)
+	item alt = ingredients[3];
+	int alt_count = 3 - spoon_count;
+	if (alt == $item[meat shield]) {
+		return (
+			auto_buyUpTo(alt_count, $item[buckler buckle]) &&
+			cli_execute(`make {alt_count} dense meat stack`) &&
+			autoCraft("smith", alt_count, $item[buckler buckle], $item[dense meat stack]) >= alt_count
+		);
+	}
+	else if (alt == $item[dripping meat staff]) {
+		return (
+			auto_buyUpTo(alt_count, $item[big stick]) &&
+			cli_execute(`make {alt_count} meat stack`) &&
+			auto_hermit(alt_count, $item[ketchup]) &&
+			autoCraft("smith", alt_count, $item[big stick], $item[meat stack]) >= alt_count &&
+			autoCraft("smith", alt_count, $item[basic meat staff], $item[ketchup]) >= alt_count
+		);
+	}
+	else {return false;}
+}
+
+boolean consumeCupOf13s() {
+	item[int] ing = auto_pickCupOf13sIngredients();
+	if (!auto_acquireCupOf13sIngredients(ing)) {return false;}
+	int advs = my_adventures();
+	string url1 = `inventory.php?pwd=${my_hash()}&action=cupof13s`;
+	string url2 = `choice.php?pwd={my_hash()}&whichchoice=1601&option=1`;
+	string url3 = `&whichitem1={to_int(ing[1])}&whichitem2={to_int(ing[2])}&whichitem3={to_int(ing[3])}`;
+  	visit_url(url1);
+  	visit_url(url2 + url3);
+
+  	if (advs == my_adventures()) {
+    	visit_url("main.php");
+		cli_execute("refresh inventory");
+		return false;
+	}
+	return true;
 }
