@@ -709,15 +709,18 @@ item[int] auto_pickCupOf13sIngredients() {
 	item spoon_alt;
 	// deciding on which other item we want if spoon isn't available
 	// these items partially come from the meatsmith, but that follows armory and leggery restrictions
+	// these items can be expensive, so we have a meat threshold to probably avoid meat issues
 	if (knoll_available() && isHermitAvailable() && isArmoryAndLeggeryStoreAvailable() && my_meat() > 7200) {
 		spoon_alt = $item[dripping meat staff];
 	}
 	else if (my_meat() > 12200 && have_skill($skill[Armorcraftiness]) && isArmoryAndLeggeryStoreAvailable()) {
 		spoon_alt = $item[meat shield];
 	}
+	// auto_canMakeCupOf13sDrink() expects that $item[none] is located in slot #3 (at least) of the return value if we were unable to pick an alternative to spoon
 	else {spoon_alt = $item[none];}
 
-	// summon spoons if possible
+	// summon spoons if possible. We do this here because mafia doesn't track how many times we can cast generate irony
+	// Therefore we can't tell how many spoons we have available without actually generating them.
 	while (item_amount($item[spoon]) < 3 && canUse($skill[Generate Irony]) && my_mp() > 30) {
 		useSkill($skill[Generate Irony]);
 	}
@@ -746,9 +749,11 @@ boolean auto_canMakeCupOf13sDrink() {
 
 float auto_CupOf13sDesirability() {
 	item[int] tentative_ingredients = auto_pickCupOf13sIngredients();
-	float net_adv_gain = 12.0;
+	// really, it's 12 adventures. But we lose one relative to the other options because ode doesn't apply
+	float net_adv_gain = 11.0;
 	for x from 1 to 3 {
 		if (tentative_ingredients[x] == $item[meat shield] && (free_crafts() - x < 1)) {
+			// if we have to craft or use our last free craft, we value this drink 1 adv less.
 			net_adv_gain -= 1;
 		}
 		else if (tentative_ingredients[x] == $item[meat shield]) {
@@ -777,6 +782,8 @@ boolean auto_acquireCupOf13sIngredients(item[int] ingredients) {
 	}
 
 	// alt as in alternative to spoon (not that we expect spoon-having)
+	// Note: auto_pickCupOf13sIngredients() puts x spoons in slots 1 to x and 3-x alternative ingredients in slots 3-x to 3.
+	// This code assumes that, so it will need modified if auto_pickCupOf13Ingredients() is modified to support other ingredients.
 	item alt = ingredients[3];
 	int alt_count = 3 - spoon_count;
 	if (alt == $item[meat shield]) {
@@ -799,6 +806,7 @@ boolean auto_acquireCupOf13sIngredients(item[int] ingredients) {
 }
 
 boolean consumeCupOf13s() {
+	// below code is based on Irrat's fork
 	item[int] ing = auto_pickCupOf13sIngredients();
 	auto_log_info(`Consuming a delicious drink of {ing[1]}, {ing[2]}, and {ing[3]} from our Cup of 13s.`);
 	if (!auto_acquireCupOf13sIngredients(ing)) {return false;}
