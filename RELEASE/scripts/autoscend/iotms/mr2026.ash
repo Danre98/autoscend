@@ -644,7 +644,7 @@ boolean auto_prepSwordOfSWords() {
 		auto_log_debug("hidden bowling alley OK");
 	}
 	if (get_property("cyrptNookEvilness").to_int() > 13 && zone_isAvailable($location[The Defiled Nook])) {
-		target_location = $location[The Defiled Nook];
+		// target_location = $location[The Defiled Nook];
 		auto_log_debug("nook OK");
 	}
 
