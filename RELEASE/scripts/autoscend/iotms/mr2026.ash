@@ -615,7 +615,7 @@ boolean auto_prepSwordOfSWords() {
 	// skip if we're out of Sword targets
 	if (get_property("_swordOfSWordsMonsterChanged").to_int() > 2) {auto_log_debug("no sword targets"); return false;}
 	// check that Sword will be selected from the drop familiars; no point in setting it if it won't be used
-	if (lookupFamiliarDatafile("drop") != sword) {auto_log_debug("no drop fam");return false;}
+	if (lookupFamiliarDatafile("drop") != sword) {auto_log_debug("no drop fam " + lookupFamiliarDatafile("drop"));return false;}
 
 	// ========= Pick a location to prep the Sword in, and adventure there ==========
 	location target_location = $location[none];
@@ -624,17 +624,21 @@ boolean auto_prepSwordOfSWords() {
 	// require that we're missing at least four of either part type before we consider
 	if ((fastenerCount() + 3 < bridgeGoal() || lumberCount() + 3 < bridgeGoal()) && zone_isAvailable($location[The Smut Orc Logging Camp])) {
 		target_location = $location[The Smut Orc Logging Camp];
+		auto_log_debug("smorcs OK");
 	}
 	// we check auto_availableBrickRift() becuase we don't want to farm bricks with sword if we can access them from the original IOTM source
 	if (auto_availableBrickRift() == $location[none] && canSummonMonster($monster[shadow slab]) && auto_neededShadowBricksSword() > 2) {
 		// represents "not a standard location", which works because this the only supported nonstandard target
 		target_location = $location[Noob Cave];
+		auto_log_debug("slabs OK");
 	}
 	if (get_property("hiddenBowlingAlleyProgress").to_int() - 1 + item_amount($item[Bowling Ball]) < 2 && zone_isAvailable($location[The Hidden Bowling Alley])) {
 		target_location = $location[The Hidden Bowling Alley];
+		auto_log_debug("hidden bowling alley OK");
 	}
 	if (get_property("cyrptNookEvilness").to_int() > 13 && zone_isAvailable($location[The Defiled Nook])) {
 		target_location = $location[The Defiled Nook];
+		auto_log_debug("nook OK");
 	}
 
 	if (target_location != $location[none]){
