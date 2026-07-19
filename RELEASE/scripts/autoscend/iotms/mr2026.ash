@@ -611,11 +611,12 @@ boolean auto_prepSwordOfSWords() {
 		set_property("auto_preferSwordFam", false);
 	}
 
+	// auto_log_debug("no drop fam " + lookupFamiliarDatafile("drop"));
 	// ========= Decide whether it makes sense to prep the Sword ==========
 	// skip if we're out of Sword targets
 	if (get_property("_swordOfSWordsMonsterChanged").to_int() > 2) {auto_log_debug("no sword targets"); return false;}
 	// check that Sword will be selected from the drop familiars; no point in setting it if it won't be used
-	if (lookupFamiliarDatafile("drop") != sword) {auto_log_debug("no drop fam " + lookupFamiliarDatafile("drop"));return false;}
+	if (lookupFamiliarDatafile("drop") != sword) {return false;}
 
 	// ========= Pick a location to prep the Sword in, and adventure there ==========
 	location target_location = $location[none];
