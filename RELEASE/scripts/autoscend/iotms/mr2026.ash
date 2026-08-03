@@ -792,6 +792,7 @@ boolean auto_acquireCupOf13sIngredients(item[int] ingredients) {
 	while (item_amount($item[spoon]) < spoon_count) {
 		if (!(canUse($skill[Generate Irony]) && my_mp() > 30 && use_skill(1, $skill[Generate Irony]))) {
 			auto_log_warning("Failure to get a spoon (ironic, right?)");
+			abort("now try a new value!");
 			return false;
 		}
 	}
